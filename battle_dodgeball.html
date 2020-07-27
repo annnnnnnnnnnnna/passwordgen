@@ -1,0 +1,183 @@
+<html>
+<body>
+<script>
+var exchangeArr = [];
+var passwordArr = [];
+
+function init() {
+  exchangeArr = [];
+  passwordArr = [];
+  var baseStr = "あいうえおアイウエオがぎぐげごガギグゲゴかきくけこカキクケコざじずぜぞザジズゼゾさしすせそサシスセソだぢづでどダヂヅデドたちつてとタチツテトばびぶべぼバビブベボなにぬねのナニヌネノぱぴぷぺぽパピプペポはひふへほハヒフヘホまみむめもマミムメモ０１２３４５６７８９やゆよヤユヨＡＢＣＤＥＦＧＨＩＪらりるれろラリルレロＫＬＭＮＯＰＱＲＳＴわをんワヲンＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊ！？－・＿ｋｌｍｎｏｐ♥♦";
+  for (var n = 0; n < baseStr.length; n++) {
+    exchangeArr.push(baseStr.charAt(n));
+  }
+}
+function decode() {
+  init();
+  var passStr = "べいコシシゲさしゼそグイアえコぐゲぐけアこかけオきあスゴウシシがいぞグいキぜアあヤすアサエアんシぜが";
+  for (var n = 0; n < passStr.length; n++) {
+    for(var m = 0; m < exchangeArr.length; m++) {
+      if (exchangeArr[m] == passStr.charAt(n)) {
+        var num = ((m * 1));
+        passwordArr.push(num);
+        break;
+      }
+    }
+  }
+//  xor(resultStr2);
+}
+
+function xor(bitArr) {
+  var result = 0;
+  
+  for (var n = 0; n < bitArr.length; n++) {
+     var tgt = bitArr[n];
+     result = result ^ tgt;
+  }
+ return result
+}
+
+function status_high(val) {
+  var th = Math.floor(val/ 100);
+  var t = Math.floor(th/10);
+  var h = th % 10;
+  return t  * 16 + h;
+}
+function status_low(val) {
+  var to = val % 100;
+  var t = Math.floor(to/10);
+  var o = to % 10;
+  return t  * 16 + o;
+}
+
+function generate() {
+  decode();
+   passwordArr[0] += document.getElementById("team_id").value * 1;
+   passwordArr[0] += document.getElementById("loop_cnt").value * 1;
+
+   if (document.getElementById("clear1").checked)   passwordArr[1] += document.getElementById("clear1").value * 1;
+   if (document.getElementById("clear2").checked)   passwordArr[1] += document.getElementById("clear2").value * 1;
+   if (document.getElementById("clear3").checked)   passwordArr[1] += document.getElementById("clear3").value * 1;
+   if (document.getElementById("clear4").checked)   passwordArr[1] += document.getElementById("clear4").value * 1;
+   if (document.getElementById("clear5").checked)   passwordArr[1] += document.getElementById("clear5").value * 1;
+   if (document.getElementById("clear6").checked)   passwordArr[1] += document.getElementById("clear6").value * 1;
+   if (document.getElementById("clear7").checked)   passwordArr[1] += document.getElementById("clear7").value * 1;
+
+   passwordArr[2] += document.getElementById("char_id_1").value * 1;
+   passwordArr[3] += document.getElementById("mp1").value * 1;
+   passwordArr[4] += status_low(document.getElementById("vit1").value * 1);
+   passwordArr[5] += status_high(document.getElementById("vit1").value * 1);
+   passwordArr[6] += status_low(document.getElementById("str1").value * 1);
+   passwordArr[7] += status_high(document.getElementById("str1").value * 1);
+   passwordArr[8] += status_low(document.getElementById("agi1").value * 1);
+   passwordArr[9] += status_high(document.getElementById("agi1").value * 1);
+   passwordArr[10] += status_low(document.getElementById("def1").value * 1);
+   passwordArr[11] += status_high(document.getElementById("def1").value * 1);
+   passwordArr[12] += status_low(document.getElementById("jmp1").value * 1);
+   passwordArr[13] += status_high(document.getElementById("jmp1").value * 1);
+
+   passwordArr[14] += document.getElementById("char_id_2").value * 1;
+   passwordArr[15] += document.getElementById("mp2").value * 1;
+   passwordArr[16] += status_low(document.getElementById("vit2").value * 1);
+   passwordArr[17] += status_high(document.getElementById("vit2").value * 1);
+   passwordArr[18] += status_low(document.getElementById("str2").value * 1);
+   passwordArr[19] += status_high(document.getElementById("str2").value * 1);
+   passwordArr[20] += status_low(document.getElementById("agi2").value * 1);
+   passwordArr[21] += status_high(document.getElementById("agi2").value * 1);
+   passwordArr[22] += status_low(document.getElementById("def2").value * 1);
+   passwordArr[23] += status_high(document.getElementById("def2").value * 1);
+   passwordArr[24] += status_low(document.getElementById("jmp2").value * 1);
+   passwordArr[25] += status_high(document.getElementById("jmp2").value * 1);
+
+   passwordArr[26] += document.getElementById("char_id_3").value * 1;
+   passwordArr[27] += document.getElementById("mp3").value * 1;
+   passwordArr[28] += status_low(document.getElementById("vit3").value * 1);
+   passwordArr[29] += status_high(document.getElementById("vit3").value * 1);
+   passwordArr[30] += status_low(document.getElementById("str3").value * 1);
+   passwordArr[31] += status_high(document.getElementById("str3").value * 1);
+   passwordArr[32] += status_low(document.getElementById("agi3").value * 1);
+   passwordArr[33] += status_high(document.getElementById("agi3").value * 1);
+   passwordArr[34] += status_low(document.getElementById("def3").value * 1);
+   passwordArr[35] += status_high(document.getElementById("def3").value * 1);
+   passwordArr[36] += status_low(document.getElementById("jmp3").value * 1);
+   passwordArr[37] += status_high(document.getElementById("jmp3").value * 1);
+
+   passwordArr[38] += document.getElementById("char_id_4").value * 1;
+//   passwordArr[39] += document.getElementById("mp4").value * 1;
+//   passwordArr[40] += status_low(document.getElementById("vit4").value * 1);
+//   passwordArr[41] += status_high(document.getElementById("vit4").value * 1);
+   passwordArr[42] += status_low(document.getElementById("str4").value * 1);
+   passwordArr[43] += status_high(document.getElementById("str4").value * 1);
+   passwordArr[44] += status_low(document.getElementById("agi4").value * 1);
+   passwordArr[45] += status_high(document.getElementById("agi4").value * 1);
+//   passwordArr[46] += status_low(document.getElementById("def4").value * 1);
+//   passwordArr[47] += status_high(document.getElementById("def4").value * 1);
+   passwordArr[48] += status_low(document.getElementById("jmp4").value * 1);
+   passwordArr[49] += status_high(document.getElementById("jmp4").value * 1);
+
+var parity = xor(passwordArr)
+   if (parity > 200) {
+     passwordArr[39] = 200;
+     passwordArr[40] = 0;
+     passwordArr[40] = xor(passwordArr);
+   } else {
+     passwordArr[39] = parity;
+   }
+
+  var passStr = "";
+  for (var n = 0; n < passwordArr.length; n++) {
+      passStr += exchangeArr[passwordArr[n]];
+    if ((n+1) % 20 == 0) {
+      passStr += "\r\n";
+    } else if ((n+1)%5 == 0) {
+      passStr += "　";
+    }
+  }
+  document.getElementById("generated_password").value= passStr;
+}
+
+</script>
+
+※ゲーム的には9周目以降もあるが、9周目は周回カウンターが1周目と同じ値になるため、9周目以降のパスワードは存在しないと思われる。
+※（影）のキャラが内野にいるとデモシーンが始まらず次の周に入れない
+
+|*チーム名|<select id="team_id"><option value="1">ＳＤガンダムヒーローズ</option><option value="2">ナイトドラゴンズ</option><option value="3">ウルトラファイターズ</option><option value="4">グレイテスト　ライダーズ</option><option value="5">ダイナミックマジンガーズ</option><option value="6">モビルスーツキラーズ</option><option value="7">モンスタークラッシャーズ</option><option value="8">ショッカーイーグルス</option></select>|
+|*周回数|<select id="loop_cnt"><option value="0">1周目</option><option value="1">2周目</option><option value="16">3周目</option><option value="24">4周目</option><option value="32">5周目</option><option value="40">6周目</option><option value="48">7周目</option><option value="56">8周目</option></select>|
+|*ステージクリア|①<input type="checkbox" id="clear1" value="1">②<input type="checkbox" id="clear2" value="2">③<input type="checkbox" id="clear3" value="4">④<input type="checkbox" id="clear4" value="8">⑤<input type="checkbox" id="clear5" value="16">⑥<input type="checkbox" id="clear6" value="32">⑦<input type="checkbox" id="clear7" value="64">|
+[f:id:annnnnnna:20190826151306p:plain]
+
+|*1人目|<select id="char_id_1"><option value="1">ウルトラマングレート</option><option value="2">ウルトラマンタロウ</option><option value="3">ウルトラセブン</option><option value="4">マジンガーＺ</option><option value="5">グレートマジンガー</option><option value="6">ゲッターロボ</option><option value="7">仮面ライダーアマゾン</option><option value="8">仮面ライダーブラックＲＸ</option><option value="9">仮面ライダーＶ３</option><option value="10">Ｆ９１</option><option value="11">ゼータガンダム</option><option value="12">アレックス</option><option value="13">ナイトガンダム</option><option value="14">けんしゼータ</option><option value="15">ほうじゅつしニュー</option><option value="16">ビギナギナ</option><option value="17">サザビー</option><option value="18">ジオング</option><option value="19">ゼットン</option><option value="20">エースキラー</option><option value="21">ゴモラ</option><option value="22">シャドームーン</option><option value="23">イカデビル</option><option value="24">ガラガランダ</option><option value="25">ダークブレイン</option><option value="26">ボーンファイター</option><option value="27">グレート雷門</option><option value="28">ウルトラマン（外野キャラ）</option><option value="29">仮面ライダー１号 （外野キャラ）</option><option value="30">ボスボロット （外野キャラ）</option><option value="31">ジム（外野キャラ）</option><option value="32">せんしジェガン （外野キャラ）</option><option value="33">ザク （外野キャラ）</option><option value="34">バルタン星人 （外野キャラ）</option><option value="35">戦闘員（外野キャラ）</option><option value="36">デブデダビデ（外野キャラ）</option><option value="37">ウルトラマングレート（影）</option><option value="38">ウルトラマンタロウ（影）</option><option value="39">ウルトラセブン（影）</option><option value="40">マジンガーＺ（影）</option><option value="41">グレートマジンガー（影）</option><option value="42">ゲッターロボ（影）</option><option value="43">仮面ライダーアマゾン（影）</option><option value="44">仮面ライダーブラックＲＸ（影）</option><option value="45">仮面ライダーＶ３（影）</option><option value="46">Ｆ９１（影）</option><option value="47">ゼータガンダム（影）</option><option value="48">アレックス（影）</option><option value="49">ナイトガンダム（影）</option><option value="50">けんしゼータ（影）</option><option value="51">ほうじゅつしニュー（影）</option><option value="52">ビギナギナ（影）</option><option value="53">サザビー（影）</option><option value="54">ジオング（影）</option><option value="55">ゼットン（影）</option><option value="56">エースキラー（影）</option><option value="57">ゴモラ（影）</option><option value="58">シャドームーン（影）</option><option value="59">イカデビル（影）</option><option value="60">ガラガランダ（影）</option><option value="61">ダークブレイン（影）</option><option value="62">ボーンファイター（影）</option><option value="63">グレート雷門（影）</option><option value="64">ウルトラマン（影）（外野キャラ）</option><option value="65">仮面ライダー１号（影） （外野キャラ）</option><option value="66">ボスボロット （影）（外野キャラ）</option><option value="67">ジム（影）（外野キャラ）</option><option value="68">せんしジェガン（影） （外野キャラ）</option><option value="69">ザク （影）（外野キャラ）</option><option value="70">バルタン星人（影） （外野キャラ）</option><option value="71">戦闘員（影）（外野キャラ）</option><option value="72">デブデダビデ（影）（外野キャラ）</option></select>|
+|*MP(0～20)|<input type="text" id="mp1">|
+|*体力(0～9999)|<input type="text" id="vit1">|
+|*ショット(0～9999)|<input type="text" id="str1">|
+|*フットワーク(0～9999)|<input type="text" id="agi1">|
+|*防御力(0～9999)|<input type="text" id="def1">|
+|*ジャンプ力(0～9999)|<input type="text" id="jmp1">|
+
+
+|*2人目|<select id="char_id_2"><option value="0">ウルトラマングレート（ＤＥＡＤ）</option><option value="1">ウルトラマングレート</option><option value="2">ウルトラマンタロウ</option><option value="3">ウルトラセブン</option><option value="4">マジンガーＺ</option><option value="5">グレートマジンガー</option><option value="6">ゲッターロボ</option><option value="7">仮面ライダーアマゾン</option><option value="8">仮面ライダーブラックＲＸ</option><option value="9">仮面ライダーＶ３</option><option value="10">Ｆ９１</option><option value="11">ゼータガンダム</option><option value="12">アレックス</option><option value="13">ナイトガンダム</option><option value="14">けんしゼータ</option><option value="15">ほうじゅつしニュー</option><option value="16">ビギナギナ</option><option value="17">サザビー</option><option value="18">ジオング</option><option value="19">ゼットン</option><option value="20">エースキラー</option><option value="21">ゴモラ</option><option value="22">シャドームーン</option><option value="23">イカデビル</option><option value="24">ガラガランダ</option><option value="25">ダークブレイン</option><option value="26">ボーンファイター</option><option value="27">グレート雷門</option><option value="28">ウルトラマン（外野キャラ）</option><option value="29">仮面ライダー１号 （外野キャラ）</option><option value="30">ボスボロット （外野キャラ）</option><option value="31">ジム（外野キャラ）</option><option value="32">せんしジェガン （外野キャラ）</option><option value="33">ザク （外野キャラ）</option><option value="34">バルタン星人 （外野キャラ）</option><option value="35">戦闘員（外野キャラ）</option><option value="36">デブデダビデ（外野キャラ）</option><option value="37">ウルトラマングレート（影）</option><option value="38">ウルトラマンタロウ（影）</option><option value="39">ウルトラセブン（影）</option><option value="40">マジンガーＺ（影）</option><option value="41">グレートマジンガー（影）</option><option value="42">ゲッターロボ（影）</option><option value="43">仮面ライダーアマゾン（影）</option><option value="44">仮面ライダーブラックＲＸ（影）</option><option value="45">仮面ライダーＶ３（影）</option><option value="46">Ｆ９１（影）</option><option value="47">ゼータガンダム（影）</option><option value="48">アレックス（影）</option><option value="49">ナイトガンダム（影）</option><option value="50">けんしゼータ（影）</option><option value="51">ほうじゅつしニュー（影）</option><option value="52">ビギナギナ（影）</option><option value="53">サザビー（影）</option><option value="54">ジオング（影）</option><option value="55">ゼットン（影）</option><option value="56">エースキラー（影）</option><option value="57">ゴモラ（影）</option><option value="58">シャドームーン（影）</option><option value="59">イカデビル（影）</option><option value="60">ガラガランダ（影）</option><option value="61">ダークブレイン（影）</option><option value="62">ボーンファイター（影）</option><option value="63">グレート雷門（影）</option><option value="64">ウルトラマン（影）（外野キャラ）</option><option value="65">仮面ライダー１号（影） （外野キャラ）</option><option value="66">ボスボロット （影）（外野キャラ）</option><option value="67">ジム（影）（外野キャラ）</option><option value="68">せんしジェガン（影） （外野キャラ）</option><option value="69">ザク （影）（外野キャラ）</option><option value="70">バルタン星人（影） （外野キャラ）</option><option value="71">戦闘員（影）（外野キャラ）</option><option value="72">デブデダビデ（影）（外野キャラ）</option></select>|
+|*MP(0～20)|<input type="text" id="mp2">|
+|*体力(0～9999)|<input type="text" id="vit2">|
+|*ショット(0～9999)|<input type="text" id="str2">|
+|*フットワーク(0～9999)|<input type="text" id="agi2">|
+|*防御力(0～9999)|<input type="text" id="def2">|
+|*ジャンプ力(0～9999)|<input type="text" id="jmp2">|
+
+|*3人目|<select id="char_id_3"><option value="0">ウルトラマングレート（ＤＥＡＤ）</option><option value="1">ウルトラマングレート</option><option value="2">ウルトラマンタロウ</option><option value="3">ウルトラセブン</option><option value="4">マジンガーＺ</option><option value="5">グレートマジンガー</option><option value="6">ゲッターロボ</option><option value="7">仮面ライダーアマゾン</option><option value="8">仮面ライダーブラックＲＸ</option><option value="9">仮面ライダーＶ３</option><option value="10">Ｆ９１</option><option value="11">ゼータガンダム</option><option value="12">アレックス</option><option value="13">ナイトガンダム</option><option value="14">けんしゼータ</option><option value="15">ほうじゅつしニュー</option><option value="16">ビギナギナ</option><option value="17">サザビー</option><option value="18">ジオング</option><option value="19">ゼットン</option><option value="20">エースキラー</option><option value="21">ゴモラ</option><option value="22">シャドームーン</option><option value="23">イカデビル</option><option value="24">ガラガランダ</option><option value="25">ダークブレイン</option><option value="26">ボーンファイター</option><option value="27">グレート雷門</option><option value="28">ウルトラマン（外野キャラ）</option><option value="29">仮面ライダー１号 （外野キャラ）</option><option value="30">ボスボロット （外野キャラ）</option><option value="31">ジム（外野キャラ）</option><option value="32">せんしジェガン （外野キャラ）</option><option value="33">ザク （外野キャラ）</option><option value="34">バルタン星人 （外野キャラ）</option><option value="35">戦闘員（外野キャラ）</option><option value="36">デブデダビデ（外野キャラ）</option><option value="37">ウルトラマングレート（影）</option><option value="38">ウルトラマンタロウ（影）</option><option value="39">ウルトラセブン（影）</option><option value="40">マジンガーＺ（影）</option><option value="41">グレートマジンガー（影）</option><option value="42">ゲッターロボ（影）</option><option value="43">仮面ライダーアマゾン（影）</option><option value="44">仮面ライダーブラックＲＸ（影）</option><option value="45">仮面ライダーＶ３（影）</option><option value="46">Ｆ９１（影）</option><option value="47">ゼータガンダム（影）</option><option value="48">アレックス（影）</option><option value="49">ナイトガンダム（影）</option><option value="50">けんしゼータ（影）</option><option value="51">ほうじゅつしニュー（影）</option><option value="52">ビギナギナ（影）</option><option value="53">サザビー（影）</option><option value="54">ジオング（影）</option><option value="55">ゼットン（影）</option><option value="56">エースキラー（影）</option><option value="57">ゴモラ（影）</option><option value="58">シャドームーン（影）</option><option value="59">イカデビル（影）</option><option value="60">ガラガランダ（影）</option><option value="61">ダークブレイン（影）</option><option value="62">ボーンファイター（影）</option><option value="63">グレート雷門（影）</option><option value="64">ウルトラマン（影）（外野キャラ）</option><option value="65">仮面ライダー１号（影） （外野キャラ）</option><option value="66">ボスボロット （影）（外野キャラ）</option><option value="67">ジム（影）（外野キャラ）</option><option value="68">せんしジェガン（影） （外野キャラ）</option><option value="69">ザク （影）（外野キャラ）</option><option value="70">バルタン星人（影） （外野キャラ）</option><option value="71">戦闘員（影）（外野キャラ）</option><option value="72">デブデダビデ（影）（外野キャラ）</option></select>|
+|*MP(0～20)|<input type="text" id="mp3">|
+|*体力(0～9999)|<input type="text" id="vit3">|
+|*ショット(0～9999)|<input type="text" id="str3">|
+|*フットワーク(0～9999)|<input type="text" id="agi3">|
+|*防御力(0～9999)|<input type="text" id="def3">|
+|*ジャンプ力(0～9999)|<input type="text" id="jmp3">|
+
+※外野に外野キャラ以外のキャラを設定してもパスワードは通りますが、試合開始時にバグって止まります
+|*4人目|<select id="char_id_4"><option value="1">ウルトラマングレート</option><option value="2">ウルトラマンタロウ</option><option value="3">ウルトラセブン</option><option value="4">マジンガーＺ</option><option value="5">グレートマジンガー</option><option value="6">ゲッターロボ</option><option value="7">仮面ライダーアマゾン</option><option value="8">仮面ライダーブラックＲＸ</option><option value="9">仮面ライダーＶ３</option><option value="10">Ｆ９１</option><option value="11">ゼータガンダム</option><option value="12">アレックス</option><option value="13">ナイトガンダム</option><option value="14">けんしゼータ</option><option value="15">ほうじゅつしニュー</option><option value="16">ビギナギナ</option><option value="17">サザビー</option><option value="18">ジオング</option><option value="19">ゼットン</option><option value="20">エースキラー</option><option value="21">ゴモラ</option><option value="22">シャドームーン</option><option value="23">イカデビル</option><option value="24">ガラガランダ</option><option value="25">ダークブレイン</option><option value="26">ボーンファイター</option><option value="27">グレート雷門</option><option value="28">ウルトラマン（外野キャラ）</option><option value="29">仮面ライダー１号 （外野キャラ）</option><option value="30">ボスボロット （外野キャラ）</option><option value="31">ジム（外野キャラ）</option><option value="32">せんしジェガン （外野キャラ）</option><option value="33">ザク （外野キャラ）</option><option value="34">バルタン星人 （外野キャラ）</option><option value="35">戦闘員（外野キャラ）</option><option value="36">デブデダビデ（外野キャラ）</option><option value="37">ウルトラマングレート（影）</option><option value="38">ウルトラマンタロウ（影）</option><option value="39">ウルトラセブン（影）</option><option value="40">マジンガーＺ（影）</option><option value="41">グレートマジンガー（影）</option><option value="42">ゲッターロボ（影）</option><option value="43">仮面ライダーアマゾン（影）</option><option value="44">仮面ライダーブラックＲＸ（影）</option><option value="45">仮面ライダーＶ３（影）</option><option value="46">Ｆ９１（影）</option><option value="47">ゼータガンダム（影）</option><option value="48">アレックス（影）</option><option value="49">ナイトガンダム（影）</option><option value="50">けんしゼータ（影）</option><option value="51">ほうじゅつしニュー（影）</option><option value="52">ビギナギナ（影）</option><option value="53">サザビー（影）</option><option value="54">ジオング（影）</option><option value="55">ゼットン（影）</option><option value="56">エースキラー（影）</option><option value="57">ゴモラ（影）</option><option value="58">シャドームーン（影）</option><option value="59">イカデビル（影）</option><option value="60">ガラガランダ（影）</option><option value="61">ダークブレイン（影）</option><option value="62">ボーンファイター（影）</option><option value="63">グレート雷門（影）</option><option value="64">ウルトラマン（影）（外野キャラ）</option><option value="65">仮面ライダー１号（影） （外野キャラ）</option><option value="66">ボスボロット （影）（外野キャラ）</option><option value="67">ジム（影）（外野キャラ）</option><option value="68">せんしジェガン（影） （外野キャラ）</option><option value="69">ザク （影）（外野キャラ）</option><option value="70">バルタン星人（影） （外野キャラ）</option><option value="71">戦闘員（影）（外野キャラ）</option><option value="72">デブデダビデ（影）（外野キャラ）</option></select>|
+|*ショット(0～9999)|<input type="text" id="str4">|
+|*フットワーク(0～9999)|<input type="text" id="agi4">|
+|*ジャンプ力(0～9999)|<input type="text" id="jmp4">|
+
+<textarea id="generated_password" style="width:600px; height:200px">ここにパスワードが出ます</textarea>
+<input type="button" onclick="generate()" value="生成"/>
+</body>
+</html>

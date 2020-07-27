@@ -1,0 +1,350 @@
+<html>
+<body>
+<script>
+var exchangeArr = [
+'Ａ','Ｂ','Ｃ','Ｄ','Ｅ','Ｆ','Ｇ','Ｈ',
+'Ｉ','Ｊ','Ｋ','Ｌ','Ｍ','Ｎ','Ｏ','Ｐ',
+'Ｑ','Ｒ','Ｓ','Ｔ','Ｕ','Ｖ','Ｗ','Ｘ',
+'Ｙ','Ｚ','あ','い','う','え','お','か',
+'き','く','け','こ','さ','し','す','せ',
+'そ','た','ち','つ','て','と','な','に',
+'ぬ','ね','の','は','ひ','ふ','へ','ほ',
+'ま','み','む','め','も','や','ゆ','よ',
+'ら','り','る','れ','ろ','わ','を','ん',
+'ゃ','ゅ','ょ','ア','イ','ウ','エ','オ',
+'カ','キ','ク','ケ','コ','サ','シ','ス',
+'セ','ソ','タ','チ','ツ','テ','ト','ナ',
+'ニ','ヌ','ネ','ノ','ハ','ヒ','フ','ホ',
+'マ','ミ','ム','メ','モ','ヤ','ユ','ヨ',
+'ラ','ル','ロ','ワ','ヲ','ン','０','１',
+'２','３','４','５','６','７','８','９'];
+
+var checksumOdd = 0;
+var checksumEven = 0;
+var drug1 = 0;
+var drug2 = 0;
+var drug3 = 0;
+var drug4 = 0;
+var event1 = 0;
+var event2= 0;
+var item1 = 0;
+var item2 = 0;
+var item3 = 0;
+var item4 = 0;
+var fixed = -1;
+var minamiFixed = 16;
+var minamiExp1 = 0;
+var minamiExp2 = 0;
+var minamiGold = 0;
+var minamiEqu = 0;
+var shibaFixed = 32;
+var shibaExp1 = 0;
+var shibaExp2 = 0;
+var shibaGold = 0;
+var shibaEqu = 0;
+var misaFixed = 48;
+var misaExp1 = 0;
+var misaExp2 = 0;
+var misaGold = 0;
+var misaEqu = 0;
+var aineFixed = 64;
+var aineExp1 = 0;
+var aineExp2 = 0;
+var aineGold = 0;
+var aineEqu = 0;
+var pass = "";
+
+function generate() {
+  pass = "";
+
+  // drug
+  drug1 = 0;
+  drug2 = 0;
+  drug3 = 0;
+  drug4 = 0;
+  event1 = 0;
+  event2 = 0;
+
+  drug1 += document.getElementById("hyper").value * 16;
+  drug1 += document.getElementById("furetto").value *2;
+  if (document.getElementById("torero").value == 4) drug1 += 1;
+
+   if (document.getElementById("torero").value < 4) drug2 += document.getElementById("torero").value * 32;
+  drug2 += document.getElementById("kuratto").value * 4;
+  drug2 += Math.floor(document.getElementById("ribairu").value / 2);
+
+  if (document.getElementById("ribairu").value%2 == 1) drug3 += 64;
+  drug3 += document.getElementById("aimu").value * 8
+  drug3 += document.getElementById("radokurifu").value * 1
+
+  drug4 += document.getElementById("kariu").value * 16;
+  drug4 += document.getElementById("haipu").value * 2;
+  if(document.getElementById("radoho").value == 4) drug4 += 1;
+
+  if(document.getElementById("radoho").value < 4) event1 += document.getElementById("radoho").value * 32
+
+  if (document.getElementById("ev1").checked == true) {
+    event1 += 16;
+  }
+  if (document.getElementById("ev2").checked == true) {
+    event1 += 8;
+  }
+  if (document.getElementById("ev3").checked == true) {
+    event1 += 4;
+  }
+  if (document.getElementById("ev4").checked == true) {
+    event1 += 2;
+  }
+  if (document.getElementById("ev5").checked == true) {
+    event1 += 1;
+  }
+  if (document.getElementById("ev6").checked == true) {
+    event2 += 64;
+  }
+  if (document.getElementById("ev7").checked == true) {
+    event2 += 32;
+  }
+  if (document.getElementById("ev8").checked == true) {
+    event2 += 16;
+  }
+  if (document.getElementById("ev9").checked == true) {
+    event2 += 8;
+  }
+  if (document.getElementById("ev10").checked == true) {
+    event2 += 4;
+  }
+
+  // item
+  if (document.getElementById("item1").value != 0) {
+    item1 = document.getElementById("item1").value * 16 + document.getElementById("item2").value * 1
+  } else {
+    item1 = 0;
+  }
+  if (document.getElementById("item2").value != 0 && document.getElementById("item3").value != 0 && item1 != 0) {
+    item2 = document.getElementById("item3").value * 16 + document.getElementById("item4").value * 1
+  } else {
+    item2 = 0;
+  }
+  if (document.getElementById("item4").value != 0 && document.getElementById("item5").value != 0 && item2 != 0) {
+    item3 = document.getElementById("item5").value * 16 + document.getElementById("item6").value * 1
+  } else {
+    item3 = 0;
+  }
+  if (document.getElementById("item6").value != 0 && document.getElementById("item7").value != 0 && item3 != 0) {
+    item4 = document.getElementById("item7").value * 16 + document.getElementById("item8").value * 1
+  } else {
+    item4 = 0;
+  }
+  // minami
+  var minamiExp = Math.floor(document.getElementById("minamiexp").value / 4);
+  minamiExp1 = Math.floor(minamiExp / 128);
+  minamiExp2 = minamiExp % 128;
+  minamiGold = Math.floor(document.getElementById("minamigold").value / 256);
+  minamiEqu = document.getElementById("minamiwep").value * 16 + document.getElementById("minamiarm").value * 1;
+  
+  // shiba
+  if (document.getElementById("shiba").checked == true) {
+    var shibaExp = Math.floor(document.getElementById("shibaexp").value / 4);
+    shibaExp1 = Math.floor(shibaExp / 128);
+    shibaExp2 = shibaExp % 128;
+    shibaGold = Math.floor(document.getElementById("shibagold").value / 256);
+    shibaEqu = document.getElementById("shibawep").value * 16 + document.getElementById("shibaarm").value * 1;
+  }
+
+  // misa
+  if (document.getElementById("misa").checked == true) {
+    var misaExp = Math.floor(document.getElementById("misaexp").value / 4);
+    misaExp1 = Math.floor(misaExp / 128);
+    misaExp2 = misaExp % 128;
+    misaGold = Math.floor(document.getElementById("misagold").value / 256);
+    misaEqu = document.getElementById("misawep").value * 16 + document.getElementById("misaarm").value * 1;
+  }
+
+  // aine
+  if (document.getElementById("aine").checked == true) {
+    var aineExp = Math.floor(document.getElementById("aineexp").value / 4);
+    aineExp1 = Math.floor(aineExp / 128);
+    aineExp2 = aineExp % 128;
+    aineGold = Math.floor(document.getElementById("ainegold").value / 256);
+    aineEqu = document.getElementById("ainewep").value * 16 + document.getElementById("ainearm").value * 1;
+  }
+
+  var passArr = generatePasswordArrayWithoutChecksum();
+  pass = calcChecksum(passArr);
+  document.getElementById("generated_password").value= pass;
+}
+
+function generatePasswordArrayWithoutChecksum() {
+  var passArr = [];
+  passArr.push(drug1);
+  passArr.push(drug2);
+  passArr.push(drug3);
+  passArr.push(drug4);
+  passArr.push(event1);
+  passArr.push(event2);
+  if (item1 != 0) {
+    passArr.push(item1);
+  }
+  if (item2 != 0) {
+    passArr.push(item2);
+  }
+  if (item3 != 0) {
+    passArr.push(item3);
+  }
+  if (item4 != 0) {
+    passArr.push(item4);
+  }
+  passArr.push(fixed);
+  passArr.push(minamiFixed);
+  passArr.push(minamiExp1);
+  passArr.push(minamiExp2);
+  passArr.push(minamiGold);
+  passArr.push(minamiEqu);
+  if (document.getElementById("shiba").checked == true) {
+    passArr.push(shibaFixed);
+    passArr.push(shibaExp1);
+    passArr.push(shibaExp2);
+    passArr.push(shibaGold);
+    passArr.push(shibaEqu);
+  }
+  if (document.getElementById("misa").checked == true) {
+    passArr.push(misaFixed);
+    passArr.push(misaExp1);
+    passArr.push(misaExp2);
+    passArr.push(misaGold);
+    passArr.push(misaEqu);
+  }
+  if (document.getElementById("aine").checked == true) {
+    passArr.push(aineFixed);
+    passArr.push(aineExp1);
+    passArr.push(aineExp2);
+    passArr.push(aineGold);
+    passArr.push(aineEqu);
+  }
+  return passArr;
+}
+
+function calcChecksum(passArr) {
+  var passStr = "";
+  var odd = 0;
+  var oddCnt = 0;
+  var even = 0;
+  var evenCnt = 0;
+  for (var n = 0; n < passArr.length; n++) {
+    var tmpVal = 0;
+    if (passArr[n] == -1) {
+      tmpVal = 0;
+    } else {
+      tmpVal = passArr[n];
+    }
+    if (n%2 == 0) {
+      odd += tmpVal;
+      oddCnt++;
+    } else{
+      even += tmpVal;
+      evenCnt++;
+    }
+  }
+  odd += oddCnt;
+  even += evenCnt;
+  checksumOdd = odd % 128;
+  checksumEven = even % 128;
+  if (oddCnt%2 == 1)  {
+    if (checksumOdd >= 64) {
+      checksumOdd -= 64;
+    } else {
+      checksumOdd += 64;
+    }
+  }
+  if (evenCnt%2 == 1) {
+    if ( checksumEven >= 64) {
+      checksumEven -= 64;
+    } else {
+      checksumEven += 64;
+    }
+  }
+
+  passStr += exchangeArr[checksumOdd];
+  passStr += exchangeArr[checksumEven];
+  for (var n = 0; n < passArr.length; n++) {
+    if (passArr[n] == -1) {
+      passStr += "©";
+    } else {
+      passStr += exchangeArr[passArr[n]];
+    }
+    if (n == 17) {
+      passStr += "\r\n";
+    } else if (n%5 == 2) {
+      passStr += "　";
+    }
+  }
+  return passStr;
+}
+
+</script>
+
+|*くすり|各 0~4|
+|*はいぱー|<select id="hyper"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+|*ふれっと|<select id="furetto"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+|*とれろ|<select id="torero"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+|*くらっと|<select id="kuratto"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+|*りばいる|<select id="ribairu"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+|*あいむ|<select id="aimu"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+|*らどくりふ|<select id="radokurifu"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+|*かりう|<select id="kariu"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+|*はいぷ|<select id="haipu"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+|*らどほ|<select id="radoho"><option value="0">なし</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>|
+
+
+|*イベント||
+|*はつでんきのスイッチを入れた|<input type="checkbox" id="ev1">|
+|*でうすのむらの右上の女性に研究所について聞いた|<input type="checkbox" id="ev2">|
+|*あーくＣＩＴＹ行政区でまっくすの死について知る|<input type="checkbox" id="ev3">|
+|*あーくＣＩＴＹ行政区の病院でなたーしゃについての話を聞く|<input type="checkbox" id="ev4">|
+|*あーくＣＩＴＹ居住区でなたーしゃに仲間の居場所聞く|<input type="checkbox" id="ev5">|
+|*あーくＣＩＴＹ行政区の管理室できのしたについての話を聞く|<input type="checkbox" id="ev6">|
+|*あーくＣＩＴＹ行政区の病院でまっくすについての話を聞く|<input type="checkbox" id="ev7">|
+|*らぼらとりーのしゃちにリーダーについての話を聞いた|<input type="checkbox" id="ev8">|
+|*こっくぴっとのいるか（リーダー）に話を聞いた|<input type="checkbox" id="ev9">|
+|*らぼらとりーのいるかに代表権を授かった（エンディングフラグ）|<input type="checkbox" id="ev10">|
+※代表権だけではエンディング見れないみたいです
+
+
+※アイテム「なし」を選ぶとそれ以降のアイテム選択は無視します
+|*アイテム1|<select id="item1"><option value="0">なし</option><option value="1">ぎぞうかーど</option><option value="2">ぶるーＩＤかーど</option><option value="3">しるばーＩＤかーど</option><option value="4">れっどＩＤかーど</option><option value="5">ごーるどＩＤかーど</option><option value="6">いえろーＩＤかーど</option><option value="7">さんそぱいぷ</option></select>|
+|*アイテム2|<select id="item2"><option value="0">なし</option><option value="1">ぎぞうかーど</option><option value="2">ぶるーＩＤかーど</option><option value="3">しるばーＩＤかーど</option><option value="4">れっどＩＤかーど</option><option value="5">ごーるどＩＤかーど</option><option value="6">いえろーＩＤかーど</option><option value="7">さんそぱいぷ</option></select>|
+|*アイテム3|<select id="item3"><option value="0">なし</option><option value="1">ぎぞうかーど</option><option value="2">ぶるーＩＤかーど</option><option value="3">しるばーＩＤかーど</option><option value="4">れっどＩＤかーど</option><option value="5">ごーるどＩＤかーど</option><option value="6">いえろーＩＤかーど</option><option value="7">さんそぱいぷ</option></select>|
+|*アイテム4|<select id="item4"><option value="0">なし</option><option value="1">ぎぞうかーど</option><option value="2">ぶるーＩＤかーど</option><option value="3">しるばーＩＤかーど</option><option value="4">れっどＩＤかーど</option><option value="5">ごーるどＩＤかーど</option><option value="6">いえろーＩＤかーど</option><option value="7">さんそぱいぷ</option></select>|
+|*アイテム5|<select id="item5"><option value="0">なし</option><option value="1">ぎぞうかーど</option><option value="2">ぶるーＩＤかーど</option><option value="3">しるばーＩＤかーど</option><option value="4">れっどＩＤかーど</option><option value="5">ごーるどＩＤかーど</option><option value="6">いえろーＩＤかーど</option><option value="7">さんそぱいぷ</option></select>|
+|*アイテム6|<select id="item6"><option value="0">なし</option><option value="1">ぎぞうかーど</option><option value="2">ぶるーＩＤかーど</option><option value="3">しるばーＩＤかーど</option><option value="4">れっどＩＤかーど</option><option value="5">ごーるどＩＤかーど</option><option value="6">いえろーＩＤかーど</option><option value="7">さんそぱいぷ</option></select>|
+|*アイテム7|<select id="item7"><option value="0">なし</option><option value="1">ぎぞうかーど</option><option value="2">ぶるーＩＤかーど</option><option value="3">しるばーＩＤかーど</option><option value="4">れっどＩＤかーど</option><option value="5">ごーるどＩＤかーど</option><option value="6">いえろーＩＤかーど</option><option value="7">さんそぱいぷ</option></select>|
+|*アイテム8|<select id="item8"><option value="0">なし</option><option value="1">ぎぞうかーど</option><option value="2">ぶるーＩＤかーど</option><option value="3">しるばーＩＤかーど</option><option value="4">れっどＩＤかーど</option><option value="5">ごーるどＩＤかーど</option><option value="6">いえろーＩＤかーど</option><option value="7">さんそぱいぷ</option></select>|
+
+|*みなみ||
+|*けいけんち(0～65535)|<input type="text" id="minamiexp">|
+|*ごーるど(0～32512)|<input type="text" id="minamigold">|
+|*ぶき|<select id="minamiwep"><option value="0">なし</option><option value="1">れいがん</option><option value="2">はいぷるがん</option><option value="3">へるぶれす</option><option value="4">らぐらんじゃ</option><option value="5">じゃいろＳＰ</option><option value="6">ぷらずまほう</option></select>|
+|*ぼうぐ|<select id="minamiarm"><option value="0">なし</option><option value="1">あべんじゃ</option><option value="2">ぱらのいや</option><option value="3">ですてーた</option><option value="4">すたびらいざ</option><option value="5">ぷろてくた</option><option value="6">らすとばたる</option></select>|
+
+|*しば|いる<input type="checkbox" id="shiba">|
+|*けいけんち(0～65535)|<input type="text" id="shibaexp">|
+|*ごーるど(0～32512)|<input type="text" id="shibagold">|
+|*ぶき|<select id="shibawep"><option value="0">なし</option><option value="1">れいがん</option><option value="2">はいぷるがん</option><option value="3">へるぶれす</option><option value="4">らぐらんじゃ</option><option value="5">じゃいろＳＰ</option><option value="6">ぷらずまほう</option></select>|
+|*ぼうぐ|<select id="shibaarm"><option value="0">なし</option><option value="1">あべんじゃ</option><option value="2">ぱらのいや</option><option value="3">ですてーた</option><option value="4">すたびらいざ</option><option value="5">ぷろてくた</option><option value="6">らすとばたる</option></select>|
+
+|*みさ|いる<input type="checkbox" id="misa">|
+|*けいけんち(0～65535)|<input type="text" id="misaexp">|
+|*ごーるど(0～32512)|<input type="text" id="misagold">|
+|*ぶき|<select id="misawep"><option value="0">なし</option><option value="1">れいがん</option><option value="2">はいぷるがん</option><option value="3">へるぶれす</option><option value="4">らぐらんじゃ</option><option value="5">じゃいろＳＰ</option><option value="6">ぷらずまほう</option></select>|
+|*ぼうぐ|<select id="misaarm"><option value="0">なし</option><option value="1">あべんじゃ</option><option value="2">ぱらのいや</option><option value="3">ですてーた</option><option value="4">すたびらいざ</option><option value="5">ぷろてくた</option><option value="6">らすとばたる</option></select>|
+
+|*あいね|いる<input type="checkbox" id="aine">|
+|*けいけんち(0～65535)|<input type="text" id="aineexp">|
+|*ごーるど(0～32512)|<input type="text" id="ainegold">|
+|*ぶき|<select id="ainewep"><option value="0">なし</option><option value="1">れいがん</option><option value="2">はいぷるがん</option><option value="3">へるぶれす</option><option value="4">らぐらんじゃ</option><option value="5">じゃいろＳＰ</option><option value="6">ぷらずまほう</option></select>|
+|*ぼうぐ|<select id="ainearm"><option value="0">なし</option><option value="1">あべんじゃ</option><option value="2">ぱらのいや</option><option value="3">ですてーた</option><option value="4">すたびらいざ</option><option value="5">ぷろてくた</option><option value="6">らすとばたる</option></select>|
+
+<textarea id="generated_password" style="width:600px">ここにパスワードが出ます</textarea>
+<input type="button" onclick="generate()" value="生成"/>
+</body>
+</html>
